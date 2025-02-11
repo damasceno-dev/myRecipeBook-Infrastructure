@@ -52,7 +52,11 @@ jobs:
           
       - name: Install Dependencies (unzip and ca-certificates)
         run: |
-          apt-get update && apt-get install -y unzip ca-certificates
+          if [[ "$GITHUB_ACTIONS" == "true" ]]; then
+            sudo apt-get update && sudo apt-get install -y unzip ca-certificates
+          else
+            apt-get update && apt-get install -y unzip ca-certificates
+          fi
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3

@@ -1,0 +1,1 @@
+1) add a variable ENCODED_SECRETS in github secrets with the content of the file .secrets.Example filled
