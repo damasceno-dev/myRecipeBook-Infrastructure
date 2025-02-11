@@ -1,3 +1,10 @@
 1) Fill the file .secrets using the example from .secrets.example
 2) Export this file to base64: base64 -i .secrets
 3) add a variable ENCODED_SECRETS in github secrets with the value of the previous step
+
+To run the destroy workflow:
+Same steps from above, but run trigger it manually in github:
+1) Go to your GitHub repo → Click on “Actions”.
+2) On the left sidebar, locate “destroy.yml”.
+3) Click “Run workflow” (usually a dropdown button).
+4) Confirm and trigger the execution.
