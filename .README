@@ -1,1 +1,3 @@
-1) add a variable ENCODED_SECRETS in github secrets with the content of the file .secrets.Example filled
+1) Fill the file .secrets using the example from .secrets.example
+2) Export this file to base64: base64 -i .secrets
+3) add a variable ENCODED_SECRETS in github secrets with the value of the previous step
