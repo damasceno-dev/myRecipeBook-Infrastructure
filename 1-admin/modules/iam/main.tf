@@ -87,7 +87,9 @@ resource "aws_iam_policy" "s3_policy" {
           "s3:PutBucketNotification",
           "s3:GetBucketTagging",
           "s3:PutBucketTagging",
-          "s3:DeleteBucketTagging"
+          "s3:DeleteBucketTagging",
+          "s3:GetAccelerateConfiguration",
+          "s3:PutAccelerateConfiguration"
         ],
         "Resource": "arn:aws:s3:::${var.prefix}-s3-bucket"
       },
