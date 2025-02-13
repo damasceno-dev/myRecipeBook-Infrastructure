@@ -53,61 +53,19 @@ resource "aws_iam_policy" "s3_policy" {
     "Version": "2012-10-17",
     "Statement": [
       {
-        "Sid": "S3BucketGlobalList",
+        "Sid": "GlobalBucketListing",
         "Effect": "Allow",
-        "Action": [
-          "s3:ListAllMyBuckets"
-        ],
+        "Action": "s3:ListAllMyBuckets",
         "Resource": "*"
       },
       {
-        "Sid": "FullBucketPermissions",
+        "Sid": "FullBucketControl",
         "Effect": "Allow",
-        "Action": [
-          "s3:CreateBucket",
-          "s3:DeleteBucket",
-          "s3:ListBucket",
-          "s3:GetBucketLocation",
-          "s3:GetBucketAcl",
-          "s3:PutBucketAcl",
-          "s3:GetBucketCors",
-          "s3:PutBucketCors",
-          "s3:GetBucketPolicy",
-          "s3:PutBucketPolicy",
-          "s3:DeleteBucketPolicy",
-          "s3:GetBucketVersioning",
-          "s3:PutBucketVersioning",
-          "s3:GetBucketPublicAccessBlock",
-          "s3:PutBucketPublicAccessBlock",
-          "s3:GetBucketWebsite",
-          "s3:PutBucketWebsite",
-          "s3:GetBucketLogging",
-          "s3:PutBucketLogging",
-          "s3:GetBucketNotification",
-          "s3:PutBucketNotification",
-          "s3:GetBucketTagging",
-          "s3:PutBucketTagging",
-          "s3:DeleteBucketTagging",
-          "s3:GetAccelerateConfiguration",
-          "s3:PutAccelerateConfiguration"
-        ],
-        "Resource": "arn:aws:s3:::${var.prefix}-s3-bucket"
-      },
-      {
-        "Sid": "FullObjectPermissions",
-        "Effect": "Allow",
-        "Action": [
-          "s3:ListBucketMultipartUploads",
-          "s3:AbortMultipartUpload",
-          "s3:ListMultipartUploadParts",
-          "s3:PutObject",
-          "s3:GetObject",
-          "s3:DeleteObject",
-          "s3:GetObjectAcl",
-          "s3:PutObjectAcl",
-          "s3:RestoreObject"
-        ],
-        "Resource": "arn:aws:s3:::${var.prefix}-s3-bucket/*"
+        "Action": "s3:*",
+        "Resource": [
+          "arn:aws:s3:::${var.prefix}-s3-bucket",
+          "arn:aws:s3:::${var.prefix}-s3-bucket/*"
+        ]
       }
     ]
   })
