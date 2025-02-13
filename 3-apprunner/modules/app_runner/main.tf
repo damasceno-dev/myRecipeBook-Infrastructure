@@ -50,8 +50,8 @@ resource "aws_apprunner_service" "app" {
       image_configuration {
         port = "80"
       }
-      auto_deployments_enabled = true
     }
+    auto_deployments_enabled = true
   }
 
   instance_configuration {
