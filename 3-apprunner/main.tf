@@ -42,6 +42,6 @@ provider "aws" {
 module "app_runner" {
   source              = "./modules/app_runner"
   prefix             = data.terraform_remote_state.admin.outputs.prefix
-  repository_arn = data.terraform_remote_state.resources.outputs.repository_arn
-  repository_url = data.terraform_remote_state.resources.outputs.repository_url
+  repository_arn = data.terraform_remote_state.resources.outputs.ecr_repository_arn
+  repository_url = data.terraform_remote_state.resources.outputs.ecr_repository_url
 }

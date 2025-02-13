@@ -1,4 +1,4 @@
-name: "Destroy AWS Infrastructure"
+name: "Destroy"
 
 on:
   workflow_dispatch:  # Allows manual execution
