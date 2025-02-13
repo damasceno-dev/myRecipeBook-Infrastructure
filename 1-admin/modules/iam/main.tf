@@ -62,7 +62,7 @@ resource "aws_iam_policy" "s3_policy" {
         "Resource": "arn:aws:s3:::${var.prefix}-s3-bucket"
       },
       {
-        "Sid": "BucketConfiguration",
+        "Sid": "BucketConfigurationAndCORS",
         "Effect": "Allow",
         "Action": [
           "s3:PutBucketPolicy",
@@ -74,7 +74,9 @@ resource "aws_iam_policy" "s3_policy" {
           "s3:GetBucketPublicAccessBlock",
           "s3:GetBucketAcl",
           "s3:PutBucketAcl",
-          "s3:ListBucket"
+          "s3:ListBucket",
+          "s3:GetBucketCors",
+          "s3:PutBucketCors" 
         ],
         "Resource": "arn:aws:s3:::${var.prefix}-s3-bucket"
       },
