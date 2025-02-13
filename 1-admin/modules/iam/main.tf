@@ -172,7 +172,12 @@ resource "aws_iam_policy" "ecr_policy" {
           "ecr:PutLifecyclePolicy",
           "ecr:GetLifecyclePolicy",
           "ecr:DeleteLifecyclePolicy",
-          "ecr:DescribeImages"
+          "ecr:DescribeImages",
+          "ecr:UpdateRepository",
+          "ecr:SetRepositoryPolicy",
+          "ecr:DeleteRepositoryPolicy",
+          "ecr:GetRegistryPolicy",
+          "ecr:PutRegistryPolicy"
         ],
         Resource = "*"
       }
