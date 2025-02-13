@@ -50,17 +50,46 @@ resource "aws_iam_policy" "s3_policy" {
   name        = "${var.prefix}-S3Policy"
   description = "IAM policy for managing S3"
   policy      = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
+    "Version": "2012-10-17",
+    "Statement": [
       {
-        Effect = "Allow",
-        Action = [
-          "s3:*"
+        "Sid": "S3BucketManagement",
+        "Effect": "Allow",
+        "Action": [
+          "s3:CreateBucket",
+          "s3:DeleteBucket"
         ],
-        Resource = [
-          "arn:aws:s3:::${var.prefix}-s3-bucket",
-          "arn:aws:s3:::${var.prefix}-s3-bucket/*"
-        ]
+        "Resource": "arn:aws:s3:::${var.prefix}-s3-bucket"
+      },
+      {
+        "Sid": "S3BucketPolicyAndSettings",
+        "Effect": "Allow",
+        "Action": [
+          "s3:PutBucketPolicy",
+          "s3:GetBucketPolicy",
+          "s3:DeleteBucketPolicy",
+          "s3:PutBucketVersioning",
+          "s3:GetBucketVersioning",
+          "s3:PutBucketPublicAccessBlock",
+          "s3:GetBucketPublicAccessBlock"
+        ],
+        "Resource": "arn:aws:s3:::${var.prefix}-s3-bucket"
+      },
+      {
+        "Sid": "S3ObjectManagement",
+        "Effect": "Allow",
+        "Action": [
+          "s3:PutObject",
+          "s3:GetObject",
+          "s3:DeleteObject"
+        ],
+        "Resource": "arn:aws:s3:::${var.prefix}-s3-bucket/*"
+      },
+      {
+        "Sid": "S3BucketListing",
+        "Effect": "Allow",
+        "Action": "s3:ListBucket",
+        "Resource": "arn:aws:s3:::${var.prefix}-s3-bucket"
       }
     ]
   })
