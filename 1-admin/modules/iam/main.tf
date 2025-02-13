@@ -154,25 +154,45 @@ resource "aws_iam_policy" "ecr_policy" {
       {
         Effect = "Allow",
         Action = [
+          # Standard repository and authentication actions
           "ecr:CreateRepository",
           "ecr:DeleteRepository",
-          "ecr:BatchCheckLayerAvailability",
-          "ecr:GetDownloadUrlForLayer",
           "ecr:GetAuthorizationToken",
           "ecr:DescribeRepositories",
+          "ecr:GetRepositoryPolicy",
+          "ecr:SetRepositoryPolicy",
+          "ecr:DeleteRepositoryPolicy",
+
+          # Image-related actions
+          "ecr:BatchCheckLayerAvailability",
+          "ecr:GetDownloadUrlForLayer",
           "ecr:ListImages",
           "ecr:BatchGetImage",
-          "ecr:GetRepositoryPolicy",
           "ecr:PutImage",
+          "ecr:DescribeImages",
+
+          # Image scanning actions
+          "ecr:StartImageScan",
+          "ecr:DescribeImageScanFindings",
+          "ecr:PutImageScanningConfiguration",
+
+          # Layer upload actions
           "ecr:InitiateLayerUpload",
           "ecr:UploadLayerPart",
           "ecr:CompleteLayerUpload",
-          "ecr:TagResource",
-          "ecr:ListTagsForResource",
+
+          # Lifecycle policies
           "ecr:PutLifecyclePolicy",
           "ecr:GetLifecyclePolicy",
           "ecr:DeleteLifecyclePolicy",
-          "ecr:DescribeImages"
+
+          # Logging & monitoring
+          "logs:CreateLogStream",
+          "logs:PutLogEvents",
+
+          # Registry-level permissions
+          "ecr:GetRegistryPolicy",
+          "ecr:PutRegistryPolicy",
         ],
         Resource = "*"
       }
