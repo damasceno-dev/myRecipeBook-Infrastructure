@@ -60,7 +60,7 @@ resource "aws_apprunner_service" "app" {
   }
 
   observability_configuration {
-    observability_enabled = true
+    observability_enabled = false
   }
 
   tags = {
