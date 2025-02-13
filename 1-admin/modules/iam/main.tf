@@ -53,42 +53,57 @@ resource "aws_iam_policy" "s3_policy" {
     "Version": "2012-10-17",
     "Statement": [
       {
-        "Sid": "ManageBucket",
+        "Sid": "S3BucketGlobalList",
+        "Effect": "Allow",
+        "Action": [
+          "s3:ListAllMyBuckets"
+        ],
+        "Resource": "*"
+      },
+      {
+        "Sid": "FullBucketPermissions",
         "Effect": "Allow",
         "Action": [
           "s3:CreateBucket",
-          "s3:DeleteBucket"
-        ],
-        "Resource": "arn:aws:s3:::${var.prefix}-s3-bucket"
-      },
-      {
-        "Sid": "BucketConfigurationAndCORS",
-        "Effect": "Allow",
-        "Action": [
-          "s3:PutBucketPolicy",
-          "s3:GetBucketPolicy",
-          "s3:DeleteBucketPolicy",
-          "s3:PutBucketVersioning",
-          "s3:GetBucketVersioning",
-          "s3:PutBucketPublicAccessBlock",
-          "s3:GetBucketPublicAccessBlock",
+          "s3:DeleteBucket",
+          "s3:ListBucket",
+          "s3:GetBucketLocation",
           "s3:GetBucketAcl",
           "s3:PutBucketAcl",
-          "s3:ListBucket",
           "s3:GetBucketCors",
-          "s3:PutBucketCors" 
+          "s3:PutBucketCors",
+          "s3:GetBucketPolicy",
+          "s3:PutBucketPolicy",
+          "s3:DeleteBucketPolicy",
+          "s3:GetBucketVersioning",
+          "s3:PutBucketVersioning",
+          "s3:GetBucketPublicAccessBlock",
+          "s3:PutBucketPublicAccessBlock",
+          "s3:GetBucketWebsite",
+          "s3:PutBucketWebsite",
+          "s3:GetBucketLogging",
+          "s3:PutBucketLogging",
+          "s3:GetBucketNotification",
+          "s3:PutBucketNotification",
+          "s3:GetBucketTagging",
+          "s3:PutBucketTagging",
+          "s3:DeleteBucketTagging"
         ],
         "Resource": "arn:aws:s3:::${var.prefix}-s3-bucket"
       },
       {
-        "Sid": "ManageBucketObjects",
+        "Sid": "FullObjectPermissions",
         "Effect": "Allow",
         "Action": [
+          "s3:ListBucketMultipartUploads",
+          "s3:AbortMultipartUpload",
+          "s3:ListMultipartUploadParts",
           "s3:PutObject",
           "s3:GetObject",
           "s3:DeleteObject",
           "s3:GetObjectAcl",
-          "s3:PutObjectAcl"
+          "s3:PutObjectAcl",
+          "s3:RestoreObject"
         ],
         "Resource": "arn:aws:s3:::${var.prefix}-s3-bucket/*"
       }
