@@ -177,7 +177,11 @@ resource "aws_iam_policy" "ecr_policy" {
           "ecr:SetRepositoryPolicy",
           "ecr:DeleteRepositoryPolicy",
           "ecr:GetRegistryPolicy",
-          "ecr:PutRegistryPolicy"
+          "ecr:PutRegistryPolicy",
+          "ecr:StartImageScan",
+          "ecr:DescribeImageScanFindings",
+          "ecr:PutImageScanningConfiguration",
+          "ecr:GetDownloadUrlForLayer"
         ],
         Resource = "*"
       }
