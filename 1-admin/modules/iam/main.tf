@@ -53,7 +53,7 @@ resource "aws_iam_policy" "s3_policy" {
     "Version": "2012-10-17",
     "Statement": [
       {
-        "Sid": "S3BucketManagement",
+        "Sid": "ManageBucket",
         "Effect": "Allow",
         "Action": [
           "s3:CreateBucket",
@@ -62,7 +62,7 @@ resource "aws_iam_policy" "s3_policy" {
         "Resource": "arn:aws:s3:::${var.prefix}-s3-bucket"
       },
       {
-        "Sid": "S3BucketPolicyAndSettings",
+        "Sid": "BucketConfiguration",
         "Effect": "Allow",
         "Action": [
           "s3:PutBucketPolicy",
@@ -71,25 +71,24 @@ resource "aws_iam_policy" "s3_policy" {
           "s3:PutBucketVersioning",
           "s3:GetBucketVersioning",
           "s3:PutBucketPublicAccessBlock",
-          "s3:GetBucketPublicAccessBlock"
+          "s3:GetBucketPublicAccessBlock",
+          "s3:GetBucketAcl",
+          "s3:PutBucketAcl",
+          "s3:ListBucket"
         ],
         "Resource": "arn:aws:s3:::${var.prefix}-s3-bucket"
       },
       {
-        "Sid": "S3ObjectManagement",
+        "Sid": "ManageBucketObjects",
         "Effect": "Allow",
         "Action": [
           "s3:PutObject",
           "s3:GetObject",
-          "s3:DeleteObject"
+          "s3:DeleteObject",
+          "s3:GetObjectAcl",
+          "s3:PutObjectAcl"
         ],
         "Resource": "arn:aws:s3:::${var.prefix}-s3-bucket/*"
-      },
-      {
-        "Sid": "S3BucketListing",
-        "Effect": "Allow",
-        "Action": "s3:ListBucket",
-        "Resource": "arn:aws:s3:::${var.prefix}-s3-bucket"
       }
     ]
   })
