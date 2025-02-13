@@ -145,6 +145,7 @@ jobs:
 
       - name: Use Terraform Outputs
         run: |
+          echo "::remove-mask::$ECR_URL"  # Unmask the ECR URL before printing
           echo "RDS Endpoint: $RDS_ENDPOINT"
           echo "S3 BUCKET NAME: $S3_BUCKET_NAME"
           echo "SQS Delete User URL: $SQS_DELETE_USER_URL"
