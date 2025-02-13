@@ -181,7 +181,12 @@ resource "aws_iam_policy" "ecr_policy" {
           "ecr:StartImageScan",
           "ecr:DescribeImageScanFindings",
           "ecr:PutImageScanningConfiguration",
-          "ecr:GetDownloadUrlForLayer"
+          "ecr:GetDownloadUrlForLayer",
+          "ecr-public:DescribeRepositories",
+          "ecr-public:ListImages",
+          "ecr-public:BatchCheckLayerAvailability",
+          "ecr-public:GetDownloadUrlForLayer",
+          "ecr-public:PutImage"
         ],
         Resource = "*"
       }
