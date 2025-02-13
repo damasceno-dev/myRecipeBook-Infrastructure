@@ -8,8 +8,52 @@ permissions:
   contents: read
 
 jobs:
+  terraform_apprunner_destroy:
+    name: "1 - Terraform App Runner Destroy"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Create .secrets file
+        run: |
+          echo "${{ secrets.ENCODED_SECRETS }}" | base64 -d > .secrets
+          chmod 600 .secrets
+
+      - name: Load Environment Variables
+        run: |
+          export $(cat .secrets | xargs)
+          echo "AWS_REGION=${AWS_REGION}" >> $GITHUB_ENV
+          echo "AWS_RESOURCES_CREATOR_ACCESS_KEY_ID=${AWS_RESOURCES_CREATOR_ACCESS_KEY_ID}" >> $GITHUB_ENV
+          echo "AWS_RESOURCES_CREATOR_SECRET_ACCESS_KEY=${AWS_RESOURCES_CREATOR_SECRET_ACCESS_KEY}" >> $GITHUB_ENV
+
+      - name: Install Dependencies (unzip and ca-certificates)
+        run: |
+          if [[ "$GITHUB_ACTIONS" == "true" ]]; then
+            sudo apt-get update && sudo apt-get install -y unzip ca-certificates
+          else
+            apt-get update && apt-get install -y unzip ca-certificates
+          fi
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.6.0"
+
+      - name: Configure AWS Credentials (App Runner)
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ env.AWS_RESOURCES_CREATOR_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ env.AWS_RESOURCES_CREATOR_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Terraform Init & Destroy (3-AppRunner)
+        working-directory: 3-apprunner
+        run: |
+          terraform init -reconfigure
+          terraform destroy -auto-approve
   terraform_resources_destroy:
-    name: "1 - Terraform Resources Destroy"
+    name: "2 - Terraform Resources Destroy"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -63,7 +107,7 @@ jobs:
           fi
           terraform destroy -auto-approve -var-file=terraform.tfvars
   terraform_admin_destroy:
-    name: "2 - Terraform Admin Destroy"
+    name: "3 - Terraform Admin Destroy"
     runs-on: ubuntu-latest
     needs: terraform_resources_destroy
     steps:
