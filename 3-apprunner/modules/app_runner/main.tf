@@ -50,6 +50,13 @@ resource "aws_iam_policy" "app_runner_policy" {
         Effect   = "Allow",
         Action   = ["ecr:GetAuthorizationToken"],
         Resource = "*"
+      },
+      {
+        Effect = "Allow",
+        Action = [
+          "iam:PassRole"
+        ],
+        Resource = aws_iam_role.app_runner_execution_role.arn
       }
     ]
   })
@@ -59,31 +66,6 @@ resource "aws_iam_policy" "app_runner_policy" {
 resource "aws_iam_role_policy_attachment" "app_runner_execution_policy_attach" {
   role       = aws_iam_role.app_runner_execution_role.name
   policy_arn = aws_iam_policy.app_runner_policy.arn
-}
-
-# Add an ECR Repository Policy to allow App Runner to pull images
-resource "aws_ecr_repository_policy" "app_runner_ecr_policy" {
-  repository = var.repository_url
-
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Sid       = "AllowAppRunnerPull",
-        Effect    = "Allow",
-        Principal = {
-          Service = "apprunner.amazonaws.com" # Grants permissions to AWS App Runner
-        },
-        Action = [
-          "ecr:GetDownloadUrlForLayer",
-          "ecr:BatchGetImage",
-          "ecr:GetAuthorizationToken",
-          "ecr:ListImages",
-          "ecr:DescribeRepositories"
-        ]
-      }
-    ]
-  })
 }
 
 # AWS App Runner Service
@@ -108,6 +90,7 @@ resource "aws_apprunner_service" "app" {
   instance_configuration {
     cpu    = "1024"
     memory = "2048"
+    instance_role_arn = aws_iam_role.app_runner_execution_role.arn # ✅ Attach execution role
   }
 
   observability_configuration {

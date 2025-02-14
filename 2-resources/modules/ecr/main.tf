@@ -14,6 +14,30 @@ resource "aws_ecr_repository" "ecr" {
   }
 }
 
+resource "aws_ecr_repository_policy" "app_runner_ecr_policy" {
+  repository = aws_ecr_repository.ecr.name
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Sid       = "AllowAppRunnerPull",
+        Effect    = "Allow",
+        Principal = {
+          Service = "apprunner.amazonaws.com"
+        },
+        Action = [
+          "ecr:GetDownloadUrlForLayer",
+          "ecr:BatchGetImage",
+          "ecr:GetAuthorizationToken",
+          "ecr:ListImages",
+          "ecr:DescribeRepositories"
+        ]
+      }
+    ]
+  })
+}
+
 resource "aws_ecr_lifecycle_policy" "ecr_policy" {
   repository = aws_ecr_repository.ecr.name
 

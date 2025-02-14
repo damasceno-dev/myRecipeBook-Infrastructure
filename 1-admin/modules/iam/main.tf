@@ -242,7 +242,7 @@ resource "aws_iam_policy" "iam_policy" {
           "iam:AddRoleToInstanceProfile",
           "iam:RemoveRoleFromInstanceProfile"
         ],
-        Resource = "arn:aws:iam::533267083060:role/${var.prefix}-*"
+        Resource = "arn:aws:iam::*:role/${var.prefix}-*"
       },
       {
         Effect = "Allow",
@@ -252,9 +252,10 @@ resource "aws_iam_policy" "iam_policy" {
           "iam:GetPolicy",
           "iam:GetPolicyVersion",
           "iam:ListPolicies",
-          "iam:ListPolicyVersions"
+          "iam:ListPolicyVersions",
+          "iam:CreatePolicyVersion"
         ],
-        Resource = "arn:aws:iam::533267083060:policy/${var.prefix}-*"
+        Resource = "arn:aws:iam::*:policy/${var.prefix}-*"
       }
     ]
   })
