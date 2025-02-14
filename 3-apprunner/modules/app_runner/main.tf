@@ -19,7 +19,13 @@ resource "aws_iam_policy" "app_runner_policy" {
     Version = "2012-10-17",
     Statement = [{
         Effect   = "Allow",
-        Action   = ["ecr:GetDownloadUrlForLayer","ecr:BatchGetImage","ecr:GetAuthorizationToken","ecr:ListImages"],
+        Action   = [
+          "ecr:GetDownloadUrlForLayer",
+          "ecr:BatchGetImage",
+          "ecr:GetAuthorizationToken",
+          "ecr:ListImages",
+          "ecr:BatchCheckLayerAvailability"
+        ],
         Resource = var.repository_arn
       },
       {
