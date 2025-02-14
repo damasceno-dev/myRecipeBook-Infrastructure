@@ -108,7 +108,6 @@ resource "aws_apprunner_service" "app" {
   instance_configuration {
     cpu    = "1024"
     memory = "2048"
-    execution_role_arn = aws_iam_role.app_runner_execution_role.arn
   }
 
   observability_configuration {
