@@ -33,6 +33,20 @@ resource "aws_ecr_repository_policy" "app_runner_ecr_policy" {
           "ecr:ListImages",
           "ecr:DescribeRepositories"
         ]
+      },
+      {
+        Sid       = "AllowAppRunnerRolePull",
+        Effect    = "Allow",
+        Principal = {
+          AWS = "arn:aws:iam::*:role/${var.prefix}-app-runner-role"
+        },
+        Action = [
+          "ecr:GetDownloadUrlForLayer",
+          "ecr:BatchGetImage",
+          "ecr:GetAuthorizationToken",
+          "ecr:ListImages",
+          "ecr:DescribeRepositories"
+        ]
       }
     ]
   })
