@@ -14,7 +14,6 @@ resource "aws_iam_role" "app_runner_role" {
 resource "aws_iam_policy" "app_runner_policy" {
   name        = "${var.prefix}-app-runner-policy"
   description = "Policy for AWS App Runner to access ECR"
-
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
@@ -36,10 +35,16 @@ resource "aws_iam_policy" "app_runner_policy" {
         Resource = "*"
       },
       {
-        Effect = "Allow",
+        Effect   = "Allow",
         Action = [
-          "iam:PassRole"
+          "ecr:BatchGetImage",
+          "ecr:GetDownloadUrlForLayer"
         ],
+        Resource = "*"
+      },
+      {
+        Effect = "Allow",
+        Action = ["iam:PassRole"],
         Resource = aws_iam_role.app_runner_role.arn
       }
     ]
