@@ -21,6 +21,8 @@ data "terraform_remote_state" "admin" {
   }
 }
 
+data "aws_caller_identity" "current" {}
+
 provider "aws" {
   region = "us-east-1"
   # for github actions or act (ci), its going to take the profile from the aws_id used in the credentials step. 
@@ -46,6 +48,7 @@ module "rds" {
 module "ecr" {
   source = "./modules/ecr"
   prefix = data.terraform_remote_state.admin.outputs.prefix
+  account_id = data.aws_caller_identity.current.account_id
 }
 module "s3" {
   source = "./modules/s3"

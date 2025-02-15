@@ -38,7 +38,7 @@ resource "aws_ecr_repository_policy" "app_runner_ecr_policy" {
         Sid       = "AllowAppRunnerRolePull",
         Effect    = "Allow",
         Principal = {
-          AWS = "arn:aws:iam::*:role/${var.prefix}-app-runner-role"
+          AWS = "arn:aws:iam::${var.account_id}:role/${var.prefix}-app-runner-role"
         },
         Action = [
           "ecr:GetDownloadUrlForLayer",
