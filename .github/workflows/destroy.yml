@@ -105,7 +105,7 @@ jobs:
           else
             terraform init -reconfigure
           fi
-          terraform destroy -auto-approve -var-file=terraform.tfvars
+          terraform destroy -auto-approve -var-file=terraform.tfvars -var 'force_delete=true'
   terraform_admin_destroy:
     name: "3 - Terraform Admin Destroy"
     runs-on: ubuntu-latest
