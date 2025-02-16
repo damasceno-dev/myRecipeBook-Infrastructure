@@ -232,6 +232,7 @@ resource "aws_iam_policy" "iam_policy" {
           "iam:DetachRolePolicy",
           "iam:PutRolePolicy",
           "iam:DeleteRolePolicy",
+          "iam:DeletePolicyVersion",
           "iam:ListRolePolicies",
           "iam:ListAttachedRolePolicies",
           "iam:ListInstanceProfilesForRole",
