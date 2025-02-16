@@ -23,7 +23,7 @@ resource "aws_ecr_repository_policy" "app_runner_ecr_policy" {
         Sid: "AllowAppRunnerPull",
         Effect: "Allow",
         Principal: {
-          Service: "apprunner.amazonaws.com"
+          Service: "builder.apprunner.amazonaws.com"
         },
         Action: [
           "ecr:GetDownloadUrlForLayer",
