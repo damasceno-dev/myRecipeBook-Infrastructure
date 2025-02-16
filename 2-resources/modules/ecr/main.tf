@@ -17,22 +17,22 @@ resource "aws_ecr_repository_policy" "app_runner_ecr_policy" {
   repository = aws_ecr_repository.ecr.name
 
   policy = jsonencode({
-    Version = "2012-10-17",
+    Version   = "2012-10-17",
     Statement = [
       {
-        Sid: "AllowAppRunnerPull",
-        Effect: "Allow",
-        Principal: {
-          Service: "apprunner.amazonaws.com"
+        Sid       = "AllowAppRunnerPull",
+        Effect    = "Allow",
+        Principal = {
+          Service = "apprunner.amazonaws.com"
         },
-        Action: [
+        Action    = [
           "ecr:GetDownloadUrlForLayer",
           "ecr:BatchGetImage",
           "ecr:DescribeImages",
           "ecr:GetAuthorizationToken",
           "ecr:BatchCheckLayerAvailability"
         ],
-        Resource: "*"
+        Resource  = "*"
       }
     ]
   })
