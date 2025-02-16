@@ -1,3 +1,7 @@
+output "ecr_repository_name" {
+  value       = module.ecr.repository_name
+  description = "Name of the ECR repository"
+}
 output "ecr_repository_arn" {
   value       = module.ecr.repository_arn
   description = "ARN of the ECR repository"

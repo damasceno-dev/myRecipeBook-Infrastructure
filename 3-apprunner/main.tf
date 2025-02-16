@@ -13,7 +13,7 @@ terraform {
   }
 }
 
-
+data "aws_caller_identity" "current" {}
 data "terraform_remote_state" "admin" {
   backend = "s3"
   config = {
@@ -42,6 +42,8 @@ provider "aws" {
 module "app_runner" {
   source              = "./modules/app_runner"
   prefix             = data.terraform_remote_state.admin.outputs.prefix
+  account_id = data.aws_caller_identity.current.account_id
+  repository_name = data.terraform_remote_state.resources.outputs.ecr_repository_name
   repository_arn = data.terraform_remote_state.resources.outputs.ecr_repository_arn
   repository_url = data.terraform_remote_state.resources.outputs.ecr_repository_url
 }

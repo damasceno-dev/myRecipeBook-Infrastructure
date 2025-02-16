@@ -21,9 +21,3 @@ variable "db_password" {
 #   type        = string
 #   default     = var.resources_creator_profile
 # }
-
-variable "force_delete" {
-  description = "Force deletion of the ECR repository (removes all images)"
-  type        = bool
-  default     = false
-}
