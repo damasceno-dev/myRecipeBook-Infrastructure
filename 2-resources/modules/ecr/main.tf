@@ -13,7 +13,6 @@ resource "aws_ecr_repository" "ecr" {
     IAC  = "True"
   }
 }
-
 resource "aws_ecr_repository_policy" "app_runner_ecr_policy" {
   repository = aws_ecr_repository.ecr.name
 
@@ -31,27 +30,14 @@ resource "aws_ecr_repository_policy" "app_runner_ecr_policy" {
           "ecr:BatchGetImage",
           "ecr:GetAuthorizationToken",
           "ecr:ListImages",
-          "ecr:DescribeRepositories"
-        ]
-      },
-      {
-        Sid       = "AllowAppRunnerRolePull",
-        Effect    = "Allow",
-        Principal = {
-          AWS = "arn:aws:iam::${var.account_id}:role/${var.prefix}-app-runner-role"
-        },
-        Action = [
-          "ecr:GetDownloadUrlForLayer",
-          "ecr:BatchGetImage",
-          "ecr:GetAuthorizationToken",
-          "ecr:ListImages",
-          "ecr:DescribeRepositories"
-        ]
+          "ecr:DescribeRepositories",
+          "ecr:BatchCheckLayerAvailability"
+        ],
+        Resource = "*"
       }
     ]
   })
 }
-
 resource "aws_ecr_lifecycle_policy" "ecr_policy" {
   repository = aws_ecr_repository.ecr.name
 
