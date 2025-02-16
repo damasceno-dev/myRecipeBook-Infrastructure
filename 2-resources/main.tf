@@ -49,6 +49,7 @@ module "ecr" {
   source = "./modules/ecr"
   prefix = data.terraform_remote_state.admin.outputs.prefix
   account_id = data.aws_caller_identity.current.account_id
+  force_delete   = var.force_delete
 }
 module "s3" {
   source = "./modules/s3"
