@@ -208,7 +208,9 @@ resource "aws_iam_policy" "app_runner_policy" {
           "apprunner:DeleteService",
           "apprunner:ListServices",
           "apprunner:TagResource",
-          "apprunner:ListTagsForResource"
+          "apprunner:ListTagsForResource",
+          "apprunner:DescribeAutoScalingConfiguration",
+          "apprunner:DescribeObservabilityConfiguration"
         ],
         Resource = "*"
       }
