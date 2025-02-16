@@ -1,18 +1,18 @@
 resource "aws_iam_role" "app_runner_role" {
-  name = "${var.prefix}-app-runner-role"
+  name = "${var.prefix}-AppRunnerServiceRole"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [{
       Effect = "Allow",
-      Principal = { Service = "apprunner.amazonaws.com" },
+      Principal = { Service = ["apprunner.amazonaws.com", "build.apprunner.amazonaws.com"]   },
       Action = "sts:AssumeRole"
     }]
   })
 }
 
 resource "aws_iam_policy" "app_runner_policy" {
-  name        = "${var.prefix}-app-runner-policy"
+  name        = "${var.prefix}-AppRunnerServicePolicy"
   description = "Policy for AWS App Runner to access ECR"
   policy = jsonencode({
     Version = "2012-10-17",
@@ -27,7 +27,7 @@ resource "aws_iam_policy" "app_runner_policy" {
           "ecr:DescribeRepositories",
           "ecr:BatchCheckLayerAvailability"
         ],
-        Resource = var.repository_arn
+        Resource = "*"
       },
       {
         Effect   = "Allow",
@@ -45,7 +45,7 @@ resource "aws_iam_policy" "app_runner_policy" {
       {
         Effect = "Allow",
         Action = ["iam:PassRole"],
-        Resource = aws_iam_role.app_runner_role.arn
+        Resource = "*"
       }
     ]
   })
