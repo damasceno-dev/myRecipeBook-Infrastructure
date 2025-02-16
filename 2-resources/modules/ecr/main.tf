@@ -6,7 +6,7 @@ resource "aws_ecr_repository" "ecr" {
     encryption_type = "AES256"
   }
 
-  force_delete = var.force_delete
+  force_delete = true
 
   tags = {
     Name = "${var.prefix}-ecr"
