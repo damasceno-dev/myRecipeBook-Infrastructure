@@ -256,7 +256,8 @@ resource "aws_iam_policy" "iam_policy" {
           "iam:GetPolicyVersion",
           "iam:ListPolicies",
           "iam:ListPolicyVersions",
-          "iam:CreatePolicyVersion"
+          "iam:CreatePolicyVersion",
+          "iam:UpdateAssumeRolePolicy"
         ],
         Resource = "*"
       }
