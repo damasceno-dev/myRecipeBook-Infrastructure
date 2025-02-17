@@ -13,38 +13,19 @@ resource "aws_iam_role" "app_runner_role" {
 
 resource "aws_iam_policy" "app_runner_policy" {
   name        = "${var.prefix}-AppRunnerServicePolicy"
-  description = "Policy for AWS App Runner to access ECR"
+  description = "Policy for AWS App Runner to access ECR, replicating the AWS managed policy"
   policy = jsonencode({
-    Version = "2012-10-17",
+    Version   = "2012-10-17",
     Statement = [
       {
         Effect   = "Allow",
-        Action = [
+        Action   = [
           "ecr:GetDownloadUrlForLayer",
           "ecr:BatchGetImage",
+          "ecr:DescribeImages",
           "ecr:GetAuthorizationToken",
-          "ecr:ListImages",
-          "ecr:DescribeRepositories",
           "ecr:BatchCheckLayerAvailability"
         ],
-        Resource = "*"
-      },
-      {
-        Effect   = "Allow",
-        Action   = ["ecr:GetAuthorizationToken"],
-        Resource = "*"
-      },
-      {
-        Effect   = "Allow",
-        Action = [
-          "ecr:BatchGetImage",
-          "ecr:GetDownloadUrlForLayer"
-        ],
-        Resource = "*"
-      },
-      {
-        Effect = "Allow",
-        Action = ["iam:PassRole"],
         Resource = "*"
       }
     ]
