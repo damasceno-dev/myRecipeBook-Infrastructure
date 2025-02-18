@@ -2,7 +2,7 @@
 
 output "repository_name" {
   value       = aws_ecr_repository.ecr.name
-  description = "Nmae of the ECR repository"
+  description = "Name of the ECR repository"
 }
         
 output "repository_arn" {
