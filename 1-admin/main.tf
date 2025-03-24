@@ -3,6 +3,9 @@ IMPORTANT: Before executing this CI flow, you must manually create an S3 bucket 
 The bucket name must follow this naming convention: "${var.prefix}-terraform-state-unique1029"
 For example, if your project prefix is "myproject", create an S3 bucket named "myproject-terraform-state-unique1029" in the us-east-1 region.
 Do NOT let Terraform manage (create or destroy) this bucket—manage it separately via the AWS Console.
+
+In order to execute this script, you are going to need two users profiles in aws, one is going to be the admin, and the other one is going to be the resource creator. Admin profile is going to give Resource creator profile the permission needed to create the resources
+Attach the following customer inline policy to the admin profile, replacing ${var.prefix} with the project name and ${var.resources_creator_profile} with the resource creator profile.
 */
 
 terraform {
@@ -36,7 +39,7 @@ module "iam" {
 # IAM PERMISSIONS REQUIRED TO EXECUTE THIS TERRAFORM SCRIPT
 #######################################################################
 
-The user executing this Terraform script must have the following IAM permissions 
+The admin profile executing this Terraform script must have the following IAM permissions 
 to create, manage, and delete IAM groups, attach policies, and add users to groups.
 
 # IAM Policy and S3 Required:
@@ -115,12 +118,13 @@ to create, manage, and delete IAM groups, attach policies, and add users to grou
 # - The Terraform script creates IAM groups and policies for managing AWS services, and permissions to manage the terraform state 
 # - The ${var.prefix} ensures that permissions apply only to this specific project.
 # - Replace "${var.prefix}" with your project name (e.g., "myproject").
+# - Replace "${var.resources_creator_profile}" with the resource creator profile
 
 # HOW TO GRANT THESE PERMISSIONS?
-# 1. Go to AWS IAM → Policies.
-# 2. Create a new Customer Managed Policy.
+# 1. Go to AWS IAM → Users → Select the admin user.
+# 2. In Permissions, Permissions policies, click on Add permissions and in Create inline policy.
 # 3. Copy & paste the JSON above.
-# 4. Attach this policy to the IAM user executing the Terraform script.
+# 4. In policy details, give it the name ${var.prefix}_Admin
 
 # ✅ Once granted, you can run Terraform without permission issues.
 */
