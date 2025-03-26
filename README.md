@@ -7,7 +7,11 @@ This repository is a submodule of the [MyRecipeBook Full-Stack Application](http
 - AWS CLI installed and configured
 - Terraform installed
 - GitHub account with access to this repository
-- AWS account with appropriate permissions
+- AWS account with appropriate permissions with two profiles:
+   * admin profile: it is going to provide the permissions needed.
+   * resource creator profile: it is going to create the resources needed.
+  
+This way you don't need to use the aws root key and increase the security
 
 ## Initial AWS Configuration
 
@@ -44,7 +48,10 @@ Deploys the application-specific resources:
 - ECR (Container registry for Docker images)
 - S3 (File storage)
 - SQS (Message queue)
-- App Runner (Container deployment service)
+
+### Step 3: App Runner
+Before this step, the docker image file of the backend of the application needs to be deployed to the ECR of the previous step.
+After the docker image is in ECR of aws, you can deploy App Runner manually triggering it (app-runner.yml).
 
 ### Deployment Methods
 
@@ -53,10 +60,16 @@ Deploys the application-specific resources:
 2. The `1-deploy.yml` workflow will automatically run the steps defined in the folders `1-admin` and `2-resources`
 
 #### Local Development
-If you're using act on Mac, you can run the workflow locally. Run this command in the root of the infra folder:
+You can also run the workflow locally. Run this command in the root of the infra folder:
 
+macOs/linux:
 ```bash
 act -s ENCODED_SECRETS="$(base64 -i .secrets | tr -d '\n')" --container-architecture linux/amd64
+```
+
+windows (powershell):
+```bash
+act -s ENCODED_SECRETS="$([Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes((Get-Content -Raw .secrets))))" --container-architecture linux/amd64
 ```
 
 ### Deployment Outputs
@@ -75,6 +88,8 @@ After the infrastructure is deployed, you need to deploy the App Runner service:
 2. On the left sidebar, locate "app-runner.yml"
 3. Click "Run workflow" (usually a dropdown button) and confirm
 4. After successful deployment, note down the App Runner service URL from the outputs
+
+- *App Runner URL*: The production url of the application
 
 ## Destroying Resources
 
@@ -110,4 +125,4 @@ terraform/
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details. 
+This project is licensed under the MIT License—see the LICENSE file for details. 
