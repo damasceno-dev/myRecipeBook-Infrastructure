@@ -1,6 +1,7 @@
 # MyRecipeBook Infrastructure
 
-This repository is a submodule of the [MyRecipeBook Full-Stack Application](https://github.com/damasceno-dev/myRecipeBook), which consists of three main components:
+This repository is a submodule of the [MyRecipeBook Full-Stack Application](https://github.com/damasceno-dev/myRecipeBook), 
+which consists of three main parts:
 - Infrastructure (AWS resources)—this repository
 - Backend API
 - Frontend Application
