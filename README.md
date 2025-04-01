@@ -2,7 +2,7 @@
 
 This repository is a submodule of the [MyRecipeBook Full-Stack Application](https://github.com/damasceno-dev/myRecipeBook), 
 which consists of three main parts:
-- Infrastructure (AWS resources)—this repository
+- _Infrastructure (AWS resources)—this repository_
 - Backend API
 - Frontend Application
 
@@ -15,7 +15,7 @@ which consists of three main parts:
    * admin profile: it is going to provide the permissions needed.
    * resource creator profile: it is going to create the resources needed.
   
-This way you don't need to use the aws root key and increase the security
+This way you don't need to use the aws root key and the security is increased
 
 ## Initial AWS Configuration
 
@@ -54,7 +54,7 @@ Deploys the application-specific resources:
 - SQS (Message queue)
 
 ### Step 3: App Runner
-Before this step, the docker image file of the backend of the application needs to be deployed to the ECR of the previous step.
+Before this step, the docker image file of the backend application needs to be deployed to the ECR of the previous step.
 After the docker image is in ECR of aws, you can deploy App Runner manually triggering it (app-runner.yml).
 
 ### Deployment Methods
